@@ -31,14 +31,15 @@ class Stats {
         if (!isset($this->data[$key]) || $this->data[$key]['n'] == 0) {
             return null;
         }
-        return $this->data[$key]['acc'] / $this->data[$key]['n'];
+        return $this->data[$key]['average'] = $this->data[$key]['acc'] / $this->data[$key]['n'];
     }
     public function calculateVariance($key) {
         if (!isset($this->data[$key]) || $this->data[$key]['n'] == 0) {
             return null;
         }
-        $mean = $this->calculateAverage($key);
-        return ($this->data[$key]['acc2'] / $this->data[$key]['n']) - ($mean * $mean);
+        if (!isset($this->data[$key]['average'])) $this->calculateAverage($key);
+        $mean = $this->data[$key]['average'];
+        return $this->data[$key]['variance'] = ($this->data[$key]['acc2'] / $this->data[$key]['n']) - ($mean * $mean);
     }
     public function calculateStandardDeviation($key) {
         $variance = $this->calculateVariance($key);
@@ -57,6 +58,7 @@ class Stats {
             'stddev' => $this->calculateStandardDeviation($key)
         ];
     }
+    
     public function getAllStats() {
         $stats = [];
         foreach ($this->data as $key => $value) {
@@ -88,6 +90,19 @@ class Stats {
         $this->data = [];
     }
     
+    public function getTop($n = 10, $sortBy = 'max') {
+        if (!in_array($sortBy, ['min', 'max', 'average', 'n'])) {
+            throw new InvalidArgumentException("Invalid sortBy parameter: {$sortBy}");
+        }
+        
+        $sorted = $this->data;
+        uasort($sorted, function($a, $b) use ($sortBy) {
+            return $b[$sortBy] <=> $a[$sortBy];
+        });
+        
+        return array_slice($sorted, 0, $n);
+    }
+
     public function __toString() {
         return json_encode($this->data, JSON_PRETTY_PRINT);
     }
