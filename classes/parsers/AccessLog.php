@@ -13,7 +13,7 @@ class AccessLog extends Parser {
     private function _build_pattern() {
         // vhost.domain.com:443 1.2.3.4 - - [1/Jan/2000:10:11:12 +0000] "GET /home HTTP/1.1" 200 1234 "referer" "user_agent/v0"
 
-        $patt_ip = "[0-9]{1,3}(\.[0-9]{1,3}){3}";
+        $patt_ip = $this->ip_patt;
         $patt_num = "[0-9]+";
 
         $fields['vhost'] = "[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(:[0-9]+)?";
@@ -29,7 +29,7 @@ class AccessLog extends Parser {
                 'prefix' => '"',
                 'pattern' =>
                         self::build_patt_field("method", "[A-Za-z-]+") . "\s+" .
-                        self::build_patt_field("path", "[a-zA-Z0-0/.]*") .
+                        self::build_patt_field("path", "[^ ?]*") .
                         self::build_patt_field("query", ['prefix' => "\?", 'pattern' => ".*", 'optional' => true]) . "\s+" .
                         self::build_patt_field("httpversion", ['prefix' => "HTTP/", 'pattern' => "[0-9]+(\.[0-9]+)?"]),
                 'suffix' => '"',

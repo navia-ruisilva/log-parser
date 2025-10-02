@@ -2,7 +2,7 @@
 
 abstract class Parser {
     
-    protected $ip_patt = "[0-9]{1,3}(\.[0-9]{1,3}){3}";
+    protected $ip_patt = "([0-9a-f:]+|[0-9]{1,3}(\.[0-9]{1,3}){3})";
     protected $pattern = "";
     protected $regex_delimiter = "`";
 
