@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../Parser.php';
 
-class PostgreSQLLog extends Parser {
+class PostgreSQLLogEx extends Parser {
     
     protected $_username_pattern = "[a-zA-Z0-9_.-]+";
     protected $_database_pattern = "[a-zA-Z0-9_.-]+";
