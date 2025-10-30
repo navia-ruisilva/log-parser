@@ -43,7 +43,7 @@ class PGconnections extends Analyzer {
             }
             if (isset($entry['disconnection'])) {
                 $stats->incValue("disconnections");
-                $session_time_str = $entry['disconnection_dc_session_time'] ?? null;
+                $session_time_str = $entry['dc_session_time'] ?? null;
                 if ($session_time_str !== null) {
                     $session_time_sec = $this->getSessionTimeInterval($session_time_str);
                     if ($session_time_sec !== null) {
