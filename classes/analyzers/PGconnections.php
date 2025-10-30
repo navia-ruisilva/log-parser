@@ -56,6 +56,6 @@ class PGconnections extends Analyzer {
             }
             
         }
-        return $stats;
+        return $stats->getData();
     }
 }

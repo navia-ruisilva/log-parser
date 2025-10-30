@@ -40,7 +40,7 @@ class PostgreSQLLog extends Parser {
         $fields_log_conn_auth = [];
         $fields_log_conn_auth['ca_user'] = ['prefix' => 'user=', 'pattern' => $this->_username_pattern];
         $fields_log_conn_auth['ca_database'] = ['prefix' => 'database=', 'pattern' => $this->_database_pattern];
-        $fields_log_conn_auth['ca_conn_settings'] = '.*';
+        $fields_log_conn_auth['ca_conn_settings'] = [ 'pattern' =>'.*', 'optional' => true ];
         $patt_log_conn_auth = $this->build_pattern($fields_log_conn_auth, false);
 
         $fields_log_disconn = [];
@@ -56,7 +56,8 @@ class PostgreSQLLog extends Parser {
             'pattern' => '(' . 
                 $this->build_patt_field('connection_received', ['prefix'=>'connection received:\s+', 'pattern' => $patt_log_conn_recv ]). '|' . 
                 $this->build_patt_field('connection_authorized', ['prefix' => 'connection authorized:\s+', 'pattern' => $patt_log_conn_auth ]) . '|' . 
-                $this->build_patt_field('disconnection', ['prefix' => 'disconnection:\s+', 'pattern' => $patt_log_disconn ]) .
+                $this->build_patt_field('disconnection', ['prefix' => 'disconnection:\s+', 'pattern' => $patt_log_disconn ]) . '|' .
+                $this->build_patt_field('other_log', '.*') .
                 ')'
         ];       
 

@@ -20,7 +20,7 @@ abstract class Parser {
         $sfx = $pattern['suffix'] ?? '';
 
         $p = sprintf("%s(?<%s>%s)%s", $pfx, $varname, $patt, $sfx);
-        if ($optional || isset($pattern['optional'])) $p = "(" . $p . ")?";
+        if ($optional) $p = "(" . $p . ")?";
         return $p;
     }
 
@@ -36,8 +36,10 @@ abstract class Parser {
 
         $patt = ""; $p = $start ? "^" : '';
         foreach ($fields as $fk => $fv) {
-                $patt .= $p . $this::build_patt_field($fk, $fv);
-                $p = "\s+";
+            $op1 = (($fv['optional'] ?? false) ? "(" : "");
+            $op2 = (($fv['optional'] ?? false) ? ")?" : "");
+            $patt .= $op1 . $p . $this::build_patt_field($fk, $fv) . $op2;
+            $p = "\s+";
         }
 
         $patt = $del . $patt . $del;
