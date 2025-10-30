@@ -28,7 +28,8 @@ class PostgreSQLLog extends Parser {
 	    $fields['date'] = "[0-9]{4}(-[0-9]{2}){2} [0-9]{2}(:[0-9]{2}){2}\.[0-9]{1,3} [A-Za-z]+";
 	    $fields['pid'] = ['prefix' => '\[', 'pattern' => '[0-9]+', 'suffix' => '\]'];
 	    $fields['user_db'] = [
-		    'pattern' => '\[?(?<user>' . $this->_username_pattern . ')\]?@\[?(?<database>' . $this->_database_pattern . ')\]?'
+		    'pattern' => '\[?(?<user>' . $this->_username_pattern . ')\]?@\[?(?<database>' . $this->_database_pattern . ')\]?',
+            'optional' => true
 	    ];
 	    // $fields['level'] = [ 'pattern' => "(LOG|ERROR|STATEMENT|DETAIL|HINT|FATAL)", 'suffix' => ':'];
 
