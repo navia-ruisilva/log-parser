@@ -4,6 +4,12 @@ class Stats {
     
     private $data = [];
  
+    public function incValue($key, $increment = 1) {
+        if (!isset($this->data[$key])) {
+            $this->data[$key] = 0;
+        }
+        $this->data[$key] += $increment;
+    }
     public function addValue($key, $value) {
         if (!isset($this->data[$key])) {
             $this->data[$key] = [

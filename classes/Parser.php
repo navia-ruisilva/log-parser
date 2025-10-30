@@ -24,22 +24,23 @@ abstract class Parser {
         return $p;
     }
 
-    public function build_pattern($fields) {
+    public function build_pattern($fields, $start = true) {
+        $del = ($start ? $this->regex_delimiter : '');
 
         if (empty($fields) || !is_array($fields)) {
             throw new Exception("Invalid fields array provided for pattern building.");
         }
         if (count($fields) == 0) {
-            return $this->regex_delimiter . "^$" . $this->regex_delimiter; // Empty pattern
+            return $del . "^$" . $del; // Empty pattern
         }
 
-        $patt = ""; $p = "^";
+        $patt = ""; $p = $start ? "^" : '';
         foreach ($fields as $fk => $fv) {
                 $patt .= $p . $this::build_patt_field($fk, $fv);
                 $p = "\s+";
         }
 
-        $patt = $this->regex_delimiter . $patt . $this->regex_delimiter;
+        $patt = $del . $patt . $del;
 
         return $patt;
     }
