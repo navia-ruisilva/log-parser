@@ -17,7 +17,7 @@ class Analyzer1 extends Analyzer {
             $this->_data[] = $linedata; // Store the parsed line data for later analysis
             //print_r($linedata);
         } catch (Exception $e) {
-            throw new Exception("Error analyzing line: {$line}. Exception: {$e->getMessage()}");
+            throw new Exception("Error analyzing line: Exception: {$e->getMessage()}");
         }
     }
     public function analyze() {

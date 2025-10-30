@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/../Analyzer.php';
+require_once __DIR__ . '/../Stats.php';
+
 class PGconnections extends Analyzer {
     // This class would contain methods to analyze PostgreSQL connection logs
     // Implementation details would go here
@@ -21,7 +23,7 @@ class PGconnections extends Analyzer {
             $this->_data[] = $linedata; // Store the parsed line data for later analysis
             // Additional analysis logic can be added here
         } catch (Exception $e) {
-            throw new Exception("Error analyzing line: {$line}. Exception: {$e->getMessage()}");
+            throw new Exception("Error analyzing line: Exception: {$e->getMessage()}");
         }
     }
 

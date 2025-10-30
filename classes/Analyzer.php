@@ -16,7 +16,7 @@ abstract class Analyzer {
         try {
             
         } catch (Exception $e) {
-            throw new Exception("Error analyzing line: {$line}. Exception: {$e->getMessage()}");
+            throw new Exception("Error analyzing line: Exception: {$e->getMessage()}");
         }
     }
     public function analyze() {
